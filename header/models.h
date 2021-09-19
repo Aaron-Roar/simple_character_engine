@@ -31,7 +31,7 @@ namespace Models {
     const char idle[][3] = {
         {' ', '0', ' '},
         {'/', '|', '\\'},
-        {'/', 'H', '\\'},
+        {'/', ' ', '\\'},
     };
 
     const char face[][5] = {
