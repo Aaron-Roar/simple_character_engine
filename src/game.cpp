@@ -7,7 +7,10 @@ int main() {
     Render render;
     Pixels pixels;
 
-    pixels.uploadCopy(Figures::man, 0, 0);
+    Figures::man.state.pos_top_left.x = 1;
+    Figures::man.state.pos_top_left.y = 9;
+    pixels.upload(Figures::man);
+
     pixels.uploadCopy(Figures::man, 5, 6);
 
     render.show(Figures::screen);
