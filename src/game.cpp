@@ -1,16 +1,15 @@
 #include "../header/render.h"
-#include "../header/creator.h"
+#include "../header/figures.cpp"
 
 int main() {
+    Figures::load_figures();
 
     Render render;
     Pixels pixels;
-    Models::Model model_screen = createModel(screen, 0, 0);
 
-    Models::Model model_man = createModel(man, 0, 0);
+    pixels.uploadCopy(Figures::man, 0, 0);
+    pixels.uploadCopy(Figures::man, 5, 6);
 
-    pixels.upload(model_man);
-
-    render.show(model_screen);
+    render.show(Figures::screen);
 
 }

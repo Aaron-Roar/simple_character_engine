@@ -7,7 +7,29 @@ struct Pixels {
         Models::screen[vec.x][vec.y] = pix_val;
     }
 
+    void uploadCopy(Models::Model model, int row, int col) {
+        int pixel = 0;
+        int relative_row = 0;
+        while(relative_row < model.dim.rows) {
+
+            int relative_col = 0;
+            while(relative_col < model.dim.cols) {
+                Models::Vec2 pos;
+                pos.y = row + relative_col;
+                pos.x = col + relative_row;
+
+                upload_pix(model.ptr[pixel], pos);
+
+                relative_col += 1;
+                pixel += 1;
+            }
+
+            relative_row += 1;
+        }
+    }
+
     void upload(Models::Model model) {
+
         int pixel = 0;
         int relative_row = 0;
         while(relative_row < model.dim.rows) {
