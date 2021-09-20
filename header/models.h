@@ -7,9 +7,18 @@ namespace Models {
         int y;
     };
 
+    struct Bounds {
+        Vec2 top_left;
+        Vec2 top_right;
+
+        Vec2 bot_left;
+        Vec2 bot_right;
+    };
+
     struct State {
         int orientation;
-        Vec2 pos_top_left;
+
+        Bounds bounds;
     };
 
     struct Dims {
@@ -17,7 +26,27 @@ namespace Models {
         int cols;
     };
 
-    struct Model {
+    class Model {
+        public:
+        void setModel(Vec2 top_left) {
+            state.bounds.top_left.y = top_left.y;
+            state.bounds.top_right.y = top_left.y;
+            state.bounds.bot_left.y = top_left.y + dim.rows;
+            state.bounds.bot_right.y = top_left.y + dim.rows;
+
+            state.bounds.top_left.x = top_left.x;
+            state.bounds.top_right.x = top_left.x + dim.cols;
+            state.bounds.bot_left.x = top_left.x;
+            state.bounds.bot_right.x = top_left.x + dim.cols;
+        }
+        Model(int rows, int cols, const char* chars, Vec2 top_left) {
+            dim.rows = rows;
+            dim.cols = cols;
+            ptr = chars;
+
+            setModel(top_left);
+        }
+
         int id;
 
         Dims dim; 

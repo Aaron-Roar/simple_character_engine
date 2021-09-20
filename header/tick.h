@@ -1,11 +1,12 @@
-#include "models.h"
+#pragma once
+#include "state_funcs.cpp"
 #include <cstdlib>
 
 struct StateNode {
     StateNode* next = NULL;
     Models::Model* model;
 
-    void (*state_fun)(Models::Model*) = NULL;
+    StateFunc state_structure;
 };
 
 struct StateList {
@@ -18,10 +19,10 @@ class GameState {
     GameState() {
     }
 
-    void addModel(Models::Model* model, void (*state_fun)(Models::Model*)) {
+    void addModel(Models::Model* model, StateFunc state_structure) {
         StateNode* node = (StateNode*)malloc(sizeof(StateNode));
         node->model = model;
-        node-> state_fun = state_fun;
+        node->state_structure = state_structure;
 
         if(states.list == NULL) {
             states.list = node;
@@ -44,8 +45,8 @@ class GameState {
     StateList states;
 
     void updateState(StateNode* node) {
-        if(node->state_fun == NULL) {
-            perror("no function provided to alter state\n");
+        if(node->state_structure.data == NULL) {
+            perror("no data provided to alter state\n");
             return;
         }
 
@@ -54,9 +55,8 @@ class GameState {
             return;
         }
 
-        node->state_fun(node->model);
+        node->state_structure.state_func(node->model, node->state_structure.data);
         if(node->next == NULL) {
-            printf("Finished updating states\n");
             return;
         }
 
