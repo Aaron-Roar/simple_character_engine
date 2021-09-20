@@ -1,18 +1,30 @@
 #include "../header/render.h"
-#include "../header/figures.cpp"
+#include "../header/tick.h"
+#include "../header/state_funcs.cpp"
+
+GameState global_state = GameState();
+Render render;
+Pixels pixels;
 
 int main() {
     Figures::load_figures();
+    global_state.addModel(&Figures::man, manWalk);
+    printf("Rand addModel\n");
 
-    Render render;
-    Pixels pixels;
 
-    Figures::man.state.pos_top_left.x = 1;
-    Figures::man.state.pos_top_left.y = 9;
-    pixels.upload(Figures::man);
+    int i = 0;
+    while(true) {
+        if(i > 7) {
+            break;
+        }
 
-    pixels.uploadCopy(Figures::man, 5, 6);
-
+    global_state.tick();
+    printf("Ran tick\n");
+    pixels.upload(Figures::man, false, '\0');
     render.show(Figures::screen);
+    pixels.upload(Figures::man, true, ' ');
+
+    i += 1;
+    }
 
 }

@@ -22,7 +22,9 @@ namespace Models {
 
         Dims dim; 
         State state;
+
         const char* ptr;
+
     };
 
 
